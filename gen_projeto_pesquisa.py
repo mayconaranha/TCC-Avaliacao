@@ -124,7 +124,10 @@ add_body(
     'experiência aquém do esperado — atrasos na entrega, produtos que chegam danificados, '
     'divergência entre o que foi anunciado e o que foi recebido. Essas experiências resultam, '
     'na maioria das vezes, em avaliações negativas nos marketplaces, o que prejudica tanto o '
-    'vendedor quanto a plataforma como um todo.'
+    'vendedor quanto a plataforma como um todo. Luo e Homburg (2007) mostraram que os efeitos '
+    'da satisfação do consumidor vão muito além da recompra, influenciando inclusive a eficiência '
+    'dos investimentos em marketing da empresa — o que torna o tema relevante também do ponto '
+    'de vista financeiro.'
 )
 
 add_body(
@@ -135,29 +138,34 @@ add_body(
     'em etapas específicas da jornada de compra — especialmente na logística de entrega, que '
     'frequentemente foge ao controle direto do vendedor. Kotler e Keller (2018) reforçam que a '
     'gestão da experiência do cliente é um dos pilares para a sustentabilidade de qualquer '
-    'operação de varejo, e isso vale tanto para o varejo físico quanto para o digital.'
+    'operação de varejo, e isso vale tanto para o varejo físico quanto para o digital. '
+    'Anderson (1998) mostrou que consumidores insatisfeitos tendem a se engajar mais em '
+    'comunicação boca-a-boca do que consumidores satisfeitos, o que no ambiente digital se '
+    'traduz em avaliações negativas com alcance potencialmente muito maior.'
 )
 
 add_body(
-    'Chevalier e Mayzlin (2006) demonstraram que avaliações online exercem impacto direto sobre '
-    'as vendas, o que reforça a importância de se compreender quais fatores levam o consumidor a '
-    'atribuir notas baixas. No entanto, a maioria das pesquisas sobre insatisfação em e-commerce '
-    'trata o problema de forma binária: o consumidor está ou não está satisfeito. Essa simplificação '
-    'ignora a intensidade do fenômeno. Um vendedor com 3 avaliações negativas em 50 transações '
-    'enfrenta uma realidade completamente diferente daquele que acumula 25 avaliações negativas '
-    'em 100 transações, embora ambos possam ser classificados como "insatisfatórios" em uma '
-    'análise binária. A contagem de reviews negativos é uma variável discreta e não-negativa, e '
-    'exige tratamento estatístico adequado.'
+    'Diversos estudos confirmam que avaliações online exercem impacto direto sobre o desempenho '
+    'comercial. Chevalier e Mayzlin (2006) demonstraram que o volume e a valência dos reviews '
+    'afetam as vendas de livros em plataformas online. Zhu e Zhang (2010) chegaram a conclusões '
+    'semelhantes no mercado de jogos eletrônicos, observando que o efeito dos reviews é mais forte '
+    'para produtos menos populares. Mudambi e Schuff (2010) investigaram o que torna um review '
+    'útil para o consumidor, identificando que a profundidade do texto e a moderação na nota são '
+    'fatores determinantes. A maioria dessas pesquisas, contudo, trata o fenômeno pelo lado do '
+    'consumidor que lê o review. Pouco se investigou sobre os determinantes operacionais que '
+    'levam um vendedor a acumular avaliações negativas — perspectiva que este trabalho pretende '
+    'explorar.'
 )
 
 add_body(
-    'Para variáveis com essa natureza, os modelos de regressão para dados de contagem são o '
-    'ferramental apropriado. O modelo de Poisson é o ponto de partida, mas assume que a variância '
-    'condicional é igual à média — pressuposto frequentemente violado em dados reais, configurando '
-    'o que se conhece como sobredispersão. Quando isso acontece, a regressão Binomial Negativa '
-    'se torna a alternativa natural, pois acomoda essa variabilidade adicional por meio de um '
-    'parâmetro extra (Cameron e Trivedi, 2013; Hilbe, 2011). Fávero e Belfiore (2017) detalham a '
-    'aplicação prática desses modelos em contextos econômicos e de negócios, incluindo os testes '
+    'A contagem de reviews negativos por vendedor é uma variável discreta e não-negativa, o que '
+    'requer modelos de regressão próprios para dados de contagem. O modelo de Poisson é o '
+    'ponto de partida natural, mas assume que a variância condicional é igual à média — '
+    'pressuposto frequentemente violado em dados reais, configurando o que se conhece como '
+    'sobredispersão. Quando isso acontece, a regressão Binomial Negativa se torna a alternativa '
+    'recomendada, pois acomoda essa variabilidade adicional por meio de um parâmetro extra '
+    '(Cameron e Trivedi, 2013; Hilbe, 2011). Fávero e Belfiore (2024) detalham a aplicação '
+    'prática desses modelos em contextos econômicos e de negócios, incluindo os testes '
     'diagnósticos necessários para a seleção entre Poisson e Binomial Negativa.'
 )
 
@@ -243,7 +251,7 @@ add_body(
 
 add_body(
     'A modelagem seguirá o procedimento descrito por Cameron e Trivedi (2013) e '
-    'Fávero e Belfiore (2017). Primeiro, será estimado um modelo de regressão Poisson como '
+    'Fávero e Belfiore (2024). Primeiro, será estimado um modelo de regressão Poisson como '
     'baseline, utilizando o método de mínimos quadrados iterativamente reponderados (IRLS). '
     'Em seguida, será aplicado o teste de sobredispersão de Cameron e Trivedi para verificar '
     'se a variância condicional excede a média condicional. Caso a sobredispersão seja '
@@ -352,14 +360,18 @@ doc.add_paragraph()  # espaço
 add_heading_bold('Referências')
 
 refs = [
+    'Anderson, E.W. 1998. Customer satisfaction and word of mouth. '
+    'Journal of Service Research 1(1): 5-17.',
+
     'Cameron, A.C.; Trivedi, P.K. 2013. Regression Analysis of Count Data. 2ed. '
     'Cambridge University Press, Cambridge, Reino Unido.',
 
     'Chevalier, J.A.; Mayzlin, D. 2006. The effect of word of mouth on sales: '
     'online book reviews. Journal of Marketing Research 43(3): 345-354.',
 
-    'Fávero, L.P.; Belfiore, P. 2017. Manual de Análise de Dados: Estatística e '
-    'modelagem multivariada com Excel, SPSS e Stata. Elsevier, Rio de Janeiro, RJ, Brasil.',
+    'Fávero, L.P.; Belfiore, P. 2024. Manual de Análise de Dados: Estatística e '
+    'Machine Learning com Excel, SPSS, Stata, R e Python. 2ed. LTC, '
+    'Rio de Janeiro, RJ, Brasil.',
 
     'Hilbe, J.M. 2011. Negative Binomial Regression. 2ed. Cambridge University Press, '
     'Cambridge, Reino Unido.',
@@ -367,11 +379,20 @@ refs = [
     'Kotler, P.; Keller, K.L. 2018. Administração de Marketing. 15ed. Pearson Education '
     'do Brasil, São Paulo, SP, Brasil.',
 
+    'Luo, X.; Homburg, C. 2007. Neglected outcomes of customer satisfaction. '
+    'Journal of Marketing 71(2): 133-149.',
+
+    'Mudambi, S.M.; Schuff, D. 2010. What makes a helpful online review? A study of '
+    'customer reviews on Amazon.com. MIS Quarterly 34(1): 185-200.',
+
     'Olist. 2018. Brazilian E-Commerce Public Dataset by Olist. Disponível em: '
     '<https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce>. Acesso em: 20 mar. 2026.',
 
     'Parasuraman, A.; Zeithaml, V.A.; Berry, L.L. 1985. A conceptual model of service '
     'quality and its implications for future research. Journal of Marketing 49(4): 41-50.',
+
+    'Zhu, F.; Zhang, X. 2010. Impact of online consumer reviews on sales: the moderating '
+    'role of product and consumer characteristics. Journal of Marketing 74(2): 133-148.',
 ]
 
 for ref in refs:

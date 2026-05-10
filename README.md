@@ -1,4 +1,4 @@
-# TCC — Fatores determinantes da insatisfação do consumidor no e-commerce
+# TCC — Fatores operacionais associados à insatisfação expressa em reviews negativos no e-commerce brasileiro
 
 **Aluno:** Maycon Henrique Aranha Da Silva  
 **Orientador:** Gustavo Dantas Lobo  

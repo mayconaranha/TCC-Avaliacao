@@ -70,9 +70,9 @@ jupyter notebook
 | Notebook | O que faz |
 |---|---|
 | `01_preparacao.ipynb` | Integra as 7 tabelas e agrega por vendedor — gera `data/dataset_vendedores.csv` |
-| `02_eda.ipynb` | Distribuições, correlações, VIF e verificação preliminar de sobredispersão |
+| `02_eda.ipynb` | Distribuições, curva de Lorenz, correlações, VIF e verificação preliminar de sobredispersão |
 | `03_modelagem.ipynb` | Poisson, Cameron-Trivedi, NB2 reduzido e teste de Vuong |
-| `04_interpretacao.ipynb` | Interpretação por exp(β), tabela comparativa, resíduos de Pearson |
+| `04_interpretacao.ipynb` | Interpretação por exp(β), efeitos marginais médios, calibração por decis, simulação contrafactual e diagnóstico |
 
 O `01_preparacao.ipynb` precisa rodar antes dos demais — os outros dependem do arquivo `data/dataset_vendedores.csv`.
 

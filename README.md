@@ -1,30 +1,48 @@
-# TCC — Fatores operacionais associados à insatisfação expressa em reviews negativos no e-commerce brasileiro
+# TCC — Fatores determinantes da insatisfação do consumidor no e-commerce
 
-**Aluno:** Maycon Henrique Aranha Da Silva  
-**Orientador:** Gustavo Dantas Lobo  
+**Aluno:** Maycon Henrique Aranha Da Silva
+**Orientador:** Gustavo Dantas Lobo
 **Curso:** MBA em Data Science e Analytics — USP/Esalq
 
 ---
 
 ## Sobre o estudo
 
-Investigação dos fatores operacionais que determinam a taxa de insatisfação do consumidor no e-commerce brasileiro, medida pela contagem de reviews negativos (notas 1 e 2) por vendedor.
+Este trabalho investiga quais fatores operacionais estão associados à insatisfação do consumidor no e-commerce brasileiro. A insatisfação é medida pela contagem de reviews com notas 1 e 2 que cada vendedor acumula. Como a variável é uma contagem com sobredispersão severa, o modelo de Poisson não serve — o trabalho usa regressão Binomial Negativa NB2 com offset de exposição.
 
-**Dados:** Brazilian E-Commerce Public Dataset (Olist, 2018) — base pública disponível no Kaggle.  
-**Método:** Regressão para dados de contagem (Poisson e Binomial Negativa NB2) com offset de exposição.  
-**Amostra:** 1.754 vendedores com no mínimo 5 reviews.
+A base é o Brazilian E-Commerce Public Dataset disponibilizado pela Olist no Kaggle, com aproximadamente 100 mil pedidos entre 2016 e 2018. Após o filtro de mínimo 5 reviews por vendedor, a amostra final ficou com 1.754 lojistas.
 
----
+## Principais resultados
 
-## Como executar os notebooks
+- **Atraso na entrega é o fator mais relevante**: cada dia adicional aumenta em 4,45% a taxa esperada de reviews negativos (p ≈ 10⁻²⁶).
+- **Frete tem efeito menor mas significativo**: +0,56% por real (p ≈ 10⁻⁹).
+- **Quatro categorias concentram mais reclamações** em relação ao grupo de referência: telefonia (+38,2%), cama/mesa/banho (+33,4%), móveis/decoração (+29,2%) e informática/acessórios (+20,8%).
+- **Ticket médio, peso do produto e estado do vendedor** não apresentaram associação significativa após o controle das demais variáveis.
+- **Distribuição altamente concentrada** (curva de Lorenz, Gini = 0,747): 20% dos vendedores respondem por 77,9% dos reviews negativos.
+- **Simulação contrafactual**: reduzir o atraso médio em 3 dias levaria a uma queda estimada de 12% no total de reviews negativos previstos pelo modelo.
+
+## Método
+
+O fluxo segue Cameron e Trivedi (2013) e Fávero e Belfiore (2024):
+
+1. Poisson como baseline com offset log(total de reviews)
+2. Teste de sobredispersão de Cameron-Trivedi (razão variância/média = 52,90; p = 2,31 × 10⁻¹⁵)
+3. Estimação do NB2 com α por máxima verossimilhança
+4. Seleção de modelo reduzido por AIC, BIC e Pearson χ²/gl
+5. Teste de Vuong (NB2 vs ZINB) para checar inflação de zeros — NB2 mantido
+6. Análises complementares: curva de Lorenz, efeitos marginais médios, calibração por decis e simulação contrafactual
+
+Ajuste do modelo final: AIC = 6.976,7; Pearson χ²/gl = 1,05.
+
+## Como executar
 
 ### 1. Baixar o dataset
 
-O dataset não está incluído no repositório pois é público. Faça o download diretamente no Kaggle:
+A base não está no repositório por ser pública. Faça o download no Kaggle:
 
-**Link:** https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
-Após o download, descompacte o arquivo e coloque os CSVs na pasta `data/` com a seguinte estrutura:
+Descompacte os CSVs em `data/`:
 
 ```
 data/
@@ -37,47 +55,37 @@ data/
 └── product_category_name_translation.csv
 ```
 
-### 2. Instalar as dependências
+### 2. Instalar dependências
 
 ```bash
-pip install pandas numpy statsmodels scipy matplotlib seaborn jupyter statstests
+pip install pandas numpy statsmodels scipy matplotlib seaborn jupyter statstests python-docx
 ```
 
-### 3. Executar na ordem
+### 3. Rodar os notebooks na ordem
 
 ```bash
 jupyter notebook
 ```
 
-Execute os notebooks na sequência:
-
 | Notebook | O que faz |
 |---|---|
 | `01_preparacao.ipynb` | Integra as 7 tabelas e agrega por vendedor — gera `data/dataset_vendedores.csv` |
-| `02_eda.ipynb` | Análise exploratória, distribuições, correlações e VIF |
-| `03_modelagem.ipynb` | Poisson baseline, Cameron-Trivedi, NB2 MLE, Vuong (NB2 vs ZINB) |
-| `04_interpretacao.ipynb` | Coeficientes via exp(β), tabelas e gráficos de diagnóstico |
+| `02_eda.ipynb` | Distribuições, correlações, VIF e verificação preliminar de sobredispersão |
+| `03_modelagem.ipynb` | Poisson, Cameron-Trivedi, NB2 reduzido e teste de Vuong |
+| `04_interpretacao.ipynb` | Interpretação por exp(β), tabela comparativa, resíduos de Pearson |
 
-> **Atenção:** execute sempre o `01_preparacao.ipynb` primeiro — os demais dependem do arquivo `data/dataset_vendedores.csv` que ele gera.
+O `01_preparacao.ipynb` precisa rodar antes dos demais — os outros dependem do arquivo `data/dataset_vendedores.csv`.
 
----
-
-## Estrutura do repositório
+## Estrutura
 
 ```
-notebooks/
-├── 01_preparacao.ipynb      # Integração e agregação dos dados por vendedor
-├── 02_eda.ipynb             # Análise exploratória e verificação de VIF
-├── 03_modelagem.ipynb       # Poisson, Cameron-Trivedi, NB2 MLE, Vuong test
-└── 04_interpretacao.ipynb   # Interpretação via exp(β) e diagnóstico
-
-[Projeto de pesquisa] - Maycon Henrique Aranha Da Silva.docx   # Projeto aprovado
-Resultados_Preliminares_Maycon.docx  # Resultados preliminares
+notebooks/        # análise em Python (preparação, EDA, modelagem, interpretação)
+data/             # CSVs da Olist (não versionado, baixar do Kaggle)
+outputs/          # figuras e métricas gerados pelos notebooks
+[Projeto de pesquisa] - Maycon Henrique Aranha Da Silva.docx
+[Resultados Preliminares] - Maycon Henrique Aranha Da Silva.docx
 ```
 
----
+## Stack
 
-## Tecnologias
-
-Python · pandas · numpy · statsmodels · scipy · matplotlib · seaborn · statstests
- 
+Python · pandas · numpy · statsmodels · scipy · matplotlib · seaborn · statstests · python-docx
